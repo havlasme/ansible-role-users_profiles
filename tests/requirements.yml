@@ -1,4 +1,6 @@
 ---
+- src: tomashavlas.provision_docker
+  name: provision_docker
 - name: tomashavlas.pre-users_profiles
 - name: tomashavlas.authorized_keys
 - name: tomashavlas.sudo
