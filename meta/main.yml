@@ -1,16 +1,16 @@
 dependencies:
-  - role: 'pre-users_profiles'
-  - role: 'system_groups'
+  - role: 'tomashavlas.pre-users_profiles'
+  - role: 'tomashavlas.system_groups'
     system_groups__list: '{{ users_profiles__groups }}'
-  - role: 'system_users'
+  - role: 'tomashavlas.system_users'
     system_users__list: '{{ users_profiles__register_system_users }}'
     system_users__default_groups_list: '{{ users_profiles__users_default_groups_list }}'
     system_users__default_groups_append: '{{ users_profiles__users_default_groups_append }}'
-  - role: 'authorized_keys'
+  - role: 'tomashavlas.authorized_keys'
     authorized_keys__list: '{{ users_profiles__register_authorized_keys }}'
     authorized_keys__exclusive: '{{ users_profiles__authorized_keys_exclusive }}'
     authorized_keys__manage_dir: '{{ users_profiles__authorized_keys_manage_dir }}'
-  - role: 'sudo'
+  - role: 'tomashavlas.sudo'
     sudo__specs: '{{ users_profiles__register_sudo }}'
 
 galaxy_info:
