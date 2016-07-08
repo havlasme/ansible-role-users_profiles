@@ -1,0 +1,13 @@
+---
+- src: tomashavlas.provision_docker
+  name: provision_docker
+- src: tomashavlas.pre-users_profiles
+  name: pre-users_profiles
+- src: tomashavlas.authorized_keys
+  name: authorized_keys
+- src: tomashavlas.sudo
+  name: sudo
+- src: tomashavlas.system_groups
+  name: system_groups
+- src: tomashavlas.system_users
+  name: system_users

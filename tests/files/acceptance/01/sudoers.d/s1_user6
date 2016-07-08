@@ -1,0 +1,5 @@
+## Ansible managed
+
+## User specification
+s1_user6 localhost=/bin/test
+s1_user6 remotehost=(root) NOPASSWD: /bin/test

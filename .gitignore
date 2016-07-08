@@ -1,0 +1,6 @@
+# ansible run .retry files
+*.retry
+
+# dependency roles for tests
+tests/roles/
+!tests/roles/users_profiles

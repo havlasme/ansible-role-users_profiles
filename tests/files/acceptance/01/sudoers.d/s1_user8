@@ -1,0 +1,4 @@
+## Ansible managed
+
+## User specification
+s1_user8 localhost=/bin/test
