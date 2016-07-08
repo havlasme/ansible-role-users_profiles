@@ -5,7 +5,7 @@ users_profiles
 [![Build Status][travis_image]][travis_link]
 [![Latest Tag][tag_image]][tag_link]
 
-A brief description of the role goes here.
+An [Ansible](https://www.ansible.com/) role to manage system groups, system users, users authorized keys, and sudo specifications.
 
 Requirements
 ------------
