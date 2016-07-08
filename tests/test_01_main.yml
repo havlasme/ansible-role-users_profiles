@@ -112,7 +112,7 @@
         disabled: true
   pre_tasks:
     - name: Pre-Test - Include sudo role OS specific variables
-      include_vars: 'roles/sudo/vars/{{ ansible_os_family }}.yml'
+      include_vars: 'roles/tomashavlas.sudo/vars/{{ ansible_os_family }}.yml'
       tags: [ 'always' ]
     - name: Pre-Test - Create sudo specifications drop-in directory
       file:
