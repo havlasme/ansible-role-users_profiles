@@ -2,7 +2,7 @@
 - name: Pre-Test Scenario 1.0 - Initialize Docker containers
   hosts: localhost
   roles:
-    - role: 'provision_docker'
+    - role: 'tomashavlas.provision_docker'
       provision_docker__inventory:
         - name: 'test_users_profiles_01_centos7'
           image: 'tomashavlas/ansible-test:centos7'
@@ -314,7 +314,7 @@
       failed_when: (test_result|failed or test_result|changed)
       tags: [ 'acceptance-test' ]
   roles:
-    - role: 'users_profiles'
+    - role: 'tomashavlas.users_profiles'
 
 - name: Test Scenario 1.2 - Sudo prefix and suffix
   hosts: provision_docker__containers
@@ -351,4 +351,4 @@
       failed_when: (test_result|failed or test_result|changed)
       tags: [ 'acceptance-test' ]
   roles:
-    - role: 'users_profiles'
+    - role: 'tomashavlas.users_profiles'

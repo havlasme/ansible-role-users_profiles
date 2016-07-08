@@ -143,7 +143,7 @@ Example Playbook
 ```yaml
 - hosts: all
   roles:
-    - role: 'users_profiles'
+    - role: 'tomashavlas.users_profiles'
       users_profiles__groups:
         - name: 'sshusers'
       users_profiles__list:
