@@ -131,11 +131,11 @@ users_profiles__users_default_groups_append: true
 Dependencies
 ------------
 
-- pre-users_profiles
-- authorized_keys
-- sudo
-- system_groups
-- system_users
+- tomashavlas.pre-users_profiles
+- tomashavlas.authorized_keys
+- tomashavlas.sudo
+- tomashavlas.system_groups
+- tomashavlas.system_users
 
 Example Playbook
 ----------------
