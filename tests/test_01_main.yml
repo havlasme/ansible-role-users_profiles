@@ -2,353 +2,353 @@
 - name: Pre-Test Scenario 1.0 - Initialize Docker containers
   hosts: localhost
   roles:
-    - role: 'tomashavlas.provision_docker'
+    - role: "tomashavlas.provision_docker"
       provision_docker__inventory:
-        - name: 'test_users_profiles_01_centos7'
-          image: 'tomashavlas/ansible-test:centos7'
+        - name: "test_users_profiles_01_centos7"
+          image: "tomashavlas/ansible-test:centos7"
           volumes:
-            - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
-        - name: 'test_users_profiles_01_debian8'
-          image: 'tomashavlas/ansible-test:debian8'
+            - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+        - name: "test_users_profiles_01_debian8"
+          image: "tomashavlas/ansible-test:debian8"
           volumes:
-            - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+            - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
   post_tasks:
     - name: Wait for SSH connection to Docker containers
       wait_for:
-        host: '{{ hostvars[item.name]["ansible_ssh_host"] }}'
+        host: "{{ hostvars[item.name]['ansible_ssh_host'] }}"
         port: 22
         timeout: 30
         connect_timeout: 30
-      with_items: '{{ provision_docker__inventory }}'
-  tags: [ 'initialize-docker' ]
+      with_items: "{{ provision_docker__inventory }}"
+  tags: [ "initialize-docker" ]
 
 - name: Test Scenario 1.1 - Basic role functionality
   hosts: provision_docker__containers
-  remote_user: 'root'
+  remote_user: "root"
   vars:
     test_s1_public_keys:
-      - '{{ lookup("file", "files/public_keys/id_rsa.pub") }}'
-      - '{{ lookup("file", "files/public_keys/id_ecdsa.pub") }}'
-      - '{{ lookup("file", "files/public_keys/id_ed25519.pub") }}'
-      - '{{ lookup("file", "files/public_keys/id_rsa_second.pub") }}'
+      - "{{ lookup('file', 'files/public_keys/id_rsa.pub') }}"
+      - "{{ lookup('file', 'files/public_keys/id_ecdsa.pub') }}"
+      - "{{ lookup('file', 'files/public_keys/id_ed25519.pub') }}"
+      - "{{ lookup('file', 'files/public_keys/id_rsa_second.pub') }}"
     test_s1_system_groups:
-      - 's1_homegroup'
+      - "s1_homegroup"
     test_s1_system_users:
-      - 's1_homeowner'
-      - 's1_user4'
-      - 's1_user7'
-      - 's1_user9'
+      - "s1_homeowner"
+      - "s1_user4"
+      - "s1_user7"
+      - "s1_user9"
     #TODO move role variables once #16564 is fixed
     users_profiles__groups:
 # test complete group
-      - name: 's1_group1'
+      - name: "s1_group1"
         gid: 3101
         system: true
 # test disabled group
-      - name: 's1_group2'
+      - name: "s1_group2"
         disabled: true
     users_profiles__list:
 # test complete user
-      - name: 's1_user1'
-        comment: 'advanced user'
+      - name: "s1_user1"
+        comment: "advanced user"
         createhome: true
         generate_ssh_key: true
         groups:
-          - 's1_group1'
-          - 's1_group2'
-        home: '/opt/home/s1_user1'
-        home_group: 's1_homegroup'
-        home_mode: '0777'
-        home_owner: 's1_homeowner'
-        password: '$6$rounds=100000$yPL.FSLbB5Qekkvb$L5Be8NDTZlkkD09737laWyNgpoikHNuVeuMnPJTtAYT5dRJCDT5PJnPZDZSuIXaGfSvuhudD85T42spTEyBIP/'
-        shell: '/bin/sh'
+          - "s1_group1"
+          - "s1_group2"
+        home: "/opt/home/s1_user1"
+        home_group: "s1_homegroup"
+        home_mode: "0777"
+        home_owner: "s1_homeowner"
+        password: "$6$rounds=100000$yPL.FSLbB5Qekkvb$L5Be8NDTZlkkD09737laWyNgpoikHNuVeuMnPJTtAYT5dRJCDT5PJnPZDZSuIXaGfSvuhudD85T42spTEyBIP/"
+        shell: "/bin/sh"
         ssh_key_bits: 4096
-        ssh_key_comment: 's1_user1@ansible-test'
-        ssh_key_file: '.ssh/id_rsa4096'
-        ssh_key_type: 'rsa'
+        ssh_key_comment: "s1_user1@ansible-test"
+        ssh_key_file: ".ssh/id_rsa4096"
+        ssh_key_type: "rsa"
         uid: 2101
 # test disabled user
-      - name: 's1_user2'
+      - name: "s1_user2"
         disabled: true
 # test user with authorized keys
-      - name: 's1_user3'
+      - name: "s1_user3"
         authorized_keys:
-          - '{{ test_s1_public_keys[0] }}'
-          - key: '{{ test_s1_public_keys[1] }}'
-          - key: '{{ test_s1_public_keys[2] }}'
-            key_options: 'no-port-forwarding,from="10.0.1.1"'
-          - key: '{{ test_s1_public_keys[3] }}'
+          - "{{ test_s1_public_keys[0] }}"
+          - key: "{{ test_s1_public_keys[1] }}"
+          - key: "{{ test_s1_public_keys[2] }}"
+            key_options: "no-port-forwarding,from='10.0.1.1'"
+          - key: "{{ test_s1_public_keys[3] }}"
             disabled: true
 # test user with exclusive authorized keys
-      - name: 's1_user4'
+      - name: "s1_user4"
         authorized_keys:
-          - key: '{{ test_s1_public_keys[0] }}'
+          - key: "{{ test_s1_public_keys[0] }}"
             exclusive: true
 # test user with empty authorized keys
-      - name: 's1_user5'
+      - name: "s1_user5"
         authorized_keys: []
 # test user with sudo specifications
-      - name: 's1_user6'
+      - name: "s1_user6"
         sudo:
-          - host: 'localhost'
-            command: '/bin/test'
-          - host: 'remotehost'
-            operator: 'root'
-            tag: 'NOPASSWD'
-            command: '/bin/test'
+          - host: "localhost"
+            command: "/bin/test"
+          - host: "remotehost"
+            operator: "root"
+            tag: "NOPASSWD"
+            command: "/bin/test"
 # test user with disabled sudo specifications
-      - name: 's1_user7'
+      - name: "s1_user7"
         sudo: []
 # test user with authorized keys and sudo specifications
-      - name: 's1_user8'
+      - name: "s1_user8"
         authorized_keys:
-          - '{{ test_s1_public_keys[0] }}'
+          - "{{ test_s1_public_keys[0] }}"
         sudo:
-          - host: 'localhost'
-            command: '/bin/test'
+          - host: "localhost"
+            command: "/bin/test"
 # test disabled user with authoriezd keys and sudo specifications
-      - name: 's1_user9'
+      - name: "s1_user9"
         remove: true
         disabled: true
   pre_tasks:
     - name: Pre-Test - Include sudo role OS specific variables
-      include_vars: 'roles/tomashavlas.sudo/vars/{{ ansible_os_family }}.yml'
-      tags: [ 'always' ]
+      include_vars: "roles/tomashavlas.sudo/vars/{{ ansible_os_family }}.yml"
+      tags: [ "always" ]
     - name: Pre-Test - Create sudo specifications drop-in directory
       file:
-        path: '{{ sudo__confd_dir }}'
-        state: 'directory'
+        path: "{{ sudo__confd_dir }}"
+        state: "directory"
       changed_when: false
-      tags: [ 'pre-test' ]
+      tags: [ "pre-test" ]
     - name: Pre-Test - Create alternative home directory at /opt
       file:
-        path: '/opt/home'
-        state: 'directory'
+        path: "/opt/home"
+        state: "directory"
       changed_when: false
-      tags: [ 'pre-test' ]
+      tags: [ "pre-test" ]
     - name: Pre-Test - Create system groups
       group:
-        name: '{{ item }}'
+        name: "{{ item }}"
       with_items:
-        - '{{ test_s1_system_groups }}'
+        - "{{ test_s1_system_groups }}"
       changed_when: false
-      tags: [ 'pre-test' ]
+      tags: [ "pre-test" ]
     - name: Pre-Test - Create system users
       user:
-        name: '{{ item }}'
+        name: "{{ item }}"
       with_items:
-        - '{{ test_s1_system_users }}'
+        - "{{ test_s1_system_users }}"
       changed_when: false
-      tags: [ 'pre-test' ]
+      tags: [ "pre-test" ]
     - name: Pre-Test - Create "remove me" authorized_keys (s1_user4)
       authorized_key:
-        key: '{{ test_s1_public_keys[1] }}'
-        user: 's1_user4'
+        key: "{{ test_s1_public_keys[1] }}"
+        user: "s1_user4"
       changed_when: false
-      tags: [ 'pre-test' ]
+      tags: [ "pre-test" ]
     - name: Pre-Test - Create "remove me" sudo drop-in file (s1_user7)
       copy:
-        dest: '{{ sudo__confd_dir }}/s1_user7'
-        src: 'files/sudoers.d/s1_user7'
+        dest: "{{ sudo__confd_dir }}/s1_user7"
+        src: "files/sudoers.d/s1_user7"
       changed_when: false
-      tags: [ 'pre-test' ]
+      tags: [ "pre-test" ]
     - name: Pre-Test - Create "remove me" authorized_keys (s1_user9)
       authorized_key:
-        key: '{{ test_s1_public_keys[1] }}'
-        user: 's1_user9'
+        key: "{{ test_s1_public_keys[1] }}"
+        user: "s1_user9"
       changed_when: false
-      tags: [ 'pre-test' ]
+      tags: [ "pre-test" ]
     - name: Pre-Test - Create "remove me" sudo drop-in file (s1_user9)
       copy:
-        dest: '{{ sudo__confd_dir }}/s1_user9'
-        src: 'files/sudoers.d/s1_user9'
+        dest: "{{ sudo__confd_dir }}/s1_user9"
+        src: "files/sudoers.d/s1_user9"
       changed_when: false
-      tags: [ 'pre-test' ]
+      tags: [ "pre-test" ]
   post_tasks:
     - name: Acceptance Test - Verify complete group
       group:
-        name: 's1_group1'
+        name: "s1_group1"
         gid: 3101
         system: true
-        state: 'present'
-      register: 'test_result'
+        state: "present"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify disabled group
       group:
-        name: 's1_group2'
-        state: 'absent'
-      register: 'test_result'
+        name: "s1_group2"
+        state: "absent"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify complete user
       user:
-        name: 's1_user1'
-        comment: 'advanced user'
+        name: "s1_user1"
+        comment: "advanced user"
         createhome: true
         generate_ssh_key: true
-        groups: 's1_group1'
-        home: '/opt/home/s1_user1'
-        password: '$6$rounds=100000$yPL.FSLbB5Qekkvb$L5Be8NDTZlkkD09737laWyNgpoikHNuVeuMnPJTtAYT5dRJCDT5PJnPZDZSuIXaGfSvuhudD85T42spTEyBIP/'
-        shell: '/bin/sh'
+        groups: "s1_group1"
+        home: "/opt/home/s1_user1"
+        password: "$6$rounds=100000$yPL.FSLbB5Qekkvb$L5Be8NDTZlkkD09737laWyNgpoikHNuVeuMnPJTtAYT5dRJCDT5PJnPZDZSuIXaGfSvuhudD85T42spTEyBIP/"
+        shell: "/bin/sh"
         ssh_key_bits: 4096
-        ssh_key_comment: 's1_user1@ansible-test'
-        ssh_key_file: '.ssh/id_rsa4096'
-        ssh_key_type: 'rsa'
+        ssh_key_comment: "s1_user1@ansible-test"
+        ssh_key_file: ".ssh/id_rsa4096"
+        ssh_key_type: "rsa"
         uid: 2101
-      register: 'test_result'
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify disabled user
       user:
-        name: 's1_user2'
-        state: 'absent'
-      register: 'test_result'
+        name: "s1_user2"
+        state: "absent"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with authorized keys (1 / 2)
       user:
-        name: 's1_user3'
-      register: 'test_result'
+        name: "s1_user3"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with authorized keys (2 / 2)
       copy:
-        dest: '~s1_user3/.ssh/authorized_keys'
-        src: 'files/acceptance/01/authorized_keys/s1_user3'
-      register: 'test_result'
+        dest: "~s1_user3/.ssh/authorized_keys"
+        src: "files/acceptance/01/authorized_keys/s1_user3"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with exclusive authorized keys (1 / 2)
       user:
-        name: 's1_user4'
-      register: 'test_result'
+        name: "s1_user4"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with exclusive authorized keys (2 / 2)
       copy:
-        dest: '~s1_user4/.ssh/authorized_keys'
-        src: 'files/acceptance/01/authorized_keys/s1_user4'
-      register: 'test_result'
+        dest: "~s1_user4/.ssh/authorized_keys"
+        src: "files/acceptance/01/authorized_keys/s1_user4"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with empty authorized keys (1 / 2)
       user:
-        name: 's1_user5'
-      register: 'test_result'
+        name: "s1_user5"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with empty authorized keys (2 / 2)
       file:
-        path: '~s1_user5/.ssh/authorized_keys'
-        state: 'absent'
-      register: 'test_result'
+        path: "~s1_user5/.ssh/authorized_keys"
+        state: "absent"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with sudo specifications (1 / 2)
       user:
-        name: 's1_user6'
-      register: 'test_result'
+        name: "s1_user6"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with sudo specifications (2 / 2)
       copy:
-        dest: '{{ sudo__confd_dir }}/s1_user6'
-        src: 'files/acceptance/01/sudoers.d/s1_user6'
-      register: 'test_result'
+        dest: "{{ sudo__confd_dir }}/s1_user6"
+        src: "files/acceptance/01/sudoers.d/s1_user6"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with disabled sudo specifications (1 / 2)
       user:
-        name: 's1_user7'
-      register: 'test_result'
+        name: "s1_user7"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with disabled sudo specifications (2 / 2)
       file:
-        path: '{{ sudo__confd_dir }}/s1_user7'
-        state: 'absent'
-      register: 'test_result'
+        path: "{{ sudo__confd_dir }}/s1_user7"
+        state: "absent"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with authorized keys and sudo specifications (1 / 3)
       user:
-        name: 's1_user8'
-      register: 'test_result'
+        name: "s1_user8"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with authorized keys and sudo specifications (2 / 3)
       copy:
-        dest: '~s1_user8/.ssh/authorized_keys'
-        src: 'files/acceptance/01/authorized_keys/s1_user8'
-      register: 'test_result'
+        dest: "~s1_user8/.ssh/authorized_keys"
+        src: "files/acceptance/01/authorized_keys/s1_user8"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with authorized keys and sudo specifications (3 / 3)
       copy:
-        dest: '{{ sudo__confd_dir }}/s1_user8'
-        src: 'files/acceptance/01/sudoers.d/s1_user8'
-      register: 'test_result'
+        dest: "{{ sudo__confd_dir }}/s1_user8"
+        src: "files/acceptance/01/sudoers.d/s1_user8"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify disabled user with authorized keys and sudo specifications (1 / 3)
       user:
-        name: 's1_user9'
+        name: "s1_user9"
         remove: true
-        state: 'absent'
-      register: 'test_result'
+        state: "absent"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify disabled user with authorized keys and sudo specifications (2 / 3)
       file:
-        path: '~s1_user9/.ssh/authorized_keys'
-        state: 'absent'
-      register: 'test_result'
+        path: "~s1_user9/.ssh/authorized_keys"
+        state: "absent"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify disabled user with authorized keys and sudo specifications (3 / 3)
       file:
-        dest: '{{ sudo__confd_dir }}/s1_user9'
-        state: 'absent'
-      register: 'test_result'
+        dest: "{{ sudo__confd_dir }}/s1_user9"
+        state: "absent"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
   roles:
-    - role: 'tomashavlas.users_profiles'
+    - role: "tomashavlas.users_profiles"
 
 - name: Test Scenario 1.2 - Sudo prefix and suffix
   hosts: provision_docker__containers
-  remote_user: 'root'
+  remote_user: "root"
   vars:
     #TODO move role variables once #16564 is fixed
-    users_profiles__sudo_prefix: 'prefix-'
-    users_profiles__sudo_suffix: '-suffix'
+    users_profiles__sudo_prefix: "prefix-"
+    users_profiles__sudo_suffix: "-suffix"
     users_profiles__list:
 # test sudo prefix and suffix
-      - name: 's2_user1'
+      - name: "s2_user1"
         sudo:
-          - host: 'localhost'
-            command: '/bin/test'
+          - host: "localhost"
+            command: "/bin/test"
   post_tasks:
     - name: Acceptance Test - Verify sudo prefix and suffix (1 / 3)
       user:
-        name: 's2_user1'
-      register: 'test_result'
+        name: "s2_user1"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify sudo prefix and suffix (2 / 3)
       file:
-        dest: '{{ sudo__confd_dir }}/s2_user1'
-        state: 'absent'
-      register: 'test_result'
+        dest: "{{ sudo__confd_dir }}/s2_user1"
+        state: "absent"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify sudo prefix and suffix (3 / 3)
       copy:
-        dest: '{{ sudo__confd_dir }}/prefix-s2_user1-suffix'
-        src: 'files/acceptance/01/sudoers.d/s2_user1'
-      register: 'test_result'
+        dest: "{{ sudo__confd_dir }}/prefix-s2_user1-suffix"
+        src: "files/acceptance/01/sudoers.d/s2_user1"
+      register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
-      tags: [ 'acceptance-test' ]
+      tags: [ "acceptance-test" ]
   roles:
-    - role: 'tomashavlas.users_profiles'
+    - role: "tomashavlas.users_profiles"

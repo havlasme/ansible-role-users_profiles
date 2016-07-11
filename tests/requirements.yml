@@ -1,7 +1,7 @@
 ---
-- name: tomashavlas.provision_docker
-- name: tomashavlas.pre-users_profiles
-- name: tomashavlas.authorized_keys
-- name: tomashavlas.sudo
-- name: tomashavlas.system_groups
-- name: tomashavlas.system_users
+- name: "tomashavlas.provision_docker"
+- name: "tomashavlas.pre-users_profiles"
+- name: "tomashavlas.authorized_keys"
+- name: "tomashavlas.sudo"
+- name: "tomashavlas.system_groups"
+- name: "tomashavlas.system_users"

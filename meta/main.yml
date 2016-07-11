@@ -1,26 +1,26 @@
 dependencies:
-  - role: 'tomashavlas.pre-users_profiles'
-  - role: 'tomashavlas.system_groups'
-    system_groups__list: '{{ users_profiles__groups }}'
-  - role: 'tomashavlas.system_users'
-    system_users__list: '{{ users_profiles__register_system_users }}'
-    system_users__default_groups_list: '{{ users_profiles__users_default_groups_list }}'
-    system_users__default_groups_append: '{{ users_profiles__users_default_groups_append }}'
-  - role: 'tomashavlas.authorized_keys'
-    authorized_keys__list: '{{ users_profiles__register_authorized_keys }}'
-    authorized_keys__exclusive: '{{ users_profiles__authorized_keys_exclusive }}'
-    authorized_keys__manage_dir: '{{ users_profiles__authorized_keys_manage_dir }}'
-  - role: 'tomashavlas.sudo'
-    sudo__specs: '{{ users_profiles__register_sudo }}'
+  - role: "tomashavlas.pre-users_profiles"
+  - role: "tomashavlas.system_groups"
+    system_groups__list: "{{ users_profiles__groups }}"
+  - role: "tomashavlas.system_users"
+    system_users__list: "{{ users_profiles__register_system_users }}"
+    system_users__default_groups_list: "{{ users_profiles__users_default_groups_list }}"
+    system_users__default_groups_append: "{{ users_profiles__users_default_groups_append }}"
+  - role: "tomashavlas.authorized_keys"
+    authorized_keys__list: "{{ users_profiles__register_authorized_keys }}"
+    authorized_keys__exclusive: "{{ users_profiles__authorized_keys_exclusive }}"
+    authorized_keys__manage_dir: "{{ users_profiles__authorized_keys_manage_dir }}"
+  - role: "tomashavlas.sudo"
+    sudo__specs: "{{ users_profiles__register_sudo }}"
 
 galaxy_info:
-  author: 'Tomáš Havlas'
-  description: 'Manage system users, groups, authorized keys, and sudo specifications.'
-  company: 'Raven Systems'
-  issue_tracker_url: 'https://github.com/tomashavlas/ansible-role-users_profiles/issues'
-  license: 'BSD'
+  author: "Tomáš Havlas"
+  description: "Manage system users, groups, authorized keys, and sudo specifications."
+  company: "Raven Systems"
+  issue_tracker_url: "https://github.com/tomashavlas/ansible-role-users_profiles/issues"
+  license: "BSD"
   min_ansible_version: 2.0
-  github_branch: 'master'
+  github_branch: "master"
   platforms:
   - name: Debian
     versions:
@@ -32,12 +32,12 @@ galaxy_info:
     versions:
       - 23
   galaxy_tags:
-    - 'authorized'
-    - 'key'
-    - 'keys'
-    - 'ssh'
-    - 'sudo'
-    - 'sudoers'
-    - 'system'
-    - 'user'
-    - 'users'
+    - "authorized"
+    - "key"
+    - "keys"
+    - "ssh"
+    - "sudo"
+    - "sudoers"
+    - "system"
+    - "user"
+    - "users"

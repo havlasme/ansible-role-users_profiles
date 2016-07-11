@@ -98,10 +98,10 @@ users_profiles__authorized_keys_exclusive: false
 users_profiles__authorized_keys_manage_dir: true
 
 # prefix to prepend to filenames of files located in sudo configuration dropins directory
-users_profiles__sudo_prefix: ''
+users_profiles__sudo_prefix: ""
 
 # suffix to append to filenames of files located in sudo configuration dropins directory
-users_profiles__sudo_suffix: ''
+users_profiles__sudo_suffix: ""
 
 # list of default groups for all users managed by role
 # to ignore these for selected user, that must have set option "append" to false in it's specification

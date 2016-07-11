@@ -115,10 +115,10 @@ users_profiles__authorized_keys_exclusive: false
 users_profiles__authorized_keys_manage_dir: true
 
 # prefix to prepend to filenames of files located in sudo configuration dropins directory
-users_profiles__sudo_prefix: ''
+users_profiles__sudo_prefix: ""
 
 # suffix to append to filenames of files located in sudo configuration dropins directory
-users_profiles__sudo_suffix: ''
+users_profiles__sudo_suffix: ""
 
 # list of default groups for all users managed by role
 # to ignore these for selected user, that must have set option "append" to false in it's specification
@@ -143,13 +143,13 @@ Example Playbook
 ```yaml
 - hosts: all
   roles:
-    - role: 'tomashavlas.users_profiles'
+    - role: "tomashavlas.users_profiles"
       users_profiles__groups:
-        - name: 'sshusers'
+        - name: "sshusers"
       users_profiles__list:
-        - name: 'remoteuser'
+        - name: "remoteuser"
           groups:
-            - 'sshusers'
+            - "sshusers"
 ```
 
 For more examples see [test cases](https://github.com/tomashavlas/ansible-role-users_profiles/tree/master/tests).
