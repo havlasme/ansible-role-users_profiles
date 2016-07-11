@@ -12,6 +12,9 @@ Unreleased
 - Enclosed strings into double-quotes instead of single-quotes.
   [tomashavlas]
 
+- Refactored tests.
+  [tomashavlas]
+
 v1.0
 ----
 

@@ -4,3 +4,4 @@
 # dependency roles for tests
 tests/roles/*
 !tests/roles/tomashavlas.users_profiles
+tests/*/roles/*

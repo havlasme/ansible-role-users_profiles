@@ -215,7 +215,7 @@
     - name: Acceptance Test - Verify user with authorized keys (2 / 2)
       copy:
         dest: "~s1_user3/.ssh/authorized_keys"
-        src: "files/acceptance/01/authorized_keys/s1_user3"
+        src: "files/acceptance/authorized_keys/s1_user3"
       register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
       tags: [ "acceptance-test" ]
@@ -228,7 +228,7 @@
     - name: Acceptance Test - Verify user with exclusive authorized keys (2 / 2)
       copy:
         dest: "~s1_user4/.ssh/authorized_keys"
-        src: "files/acceptance/01/authorized_keys/s1_user4"
+        src: "files/acceptance/authorized_keys/s1_user4"
       register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
       tags: [ "acceptance-test" ]
@@ -254,7 +254,7 @@
     - name: Acceptance Test - Verify user with sudo specifications (2 / 2)
       copy:
         dest: "{{ sudo__confd_dir }}/s1_user6"
-        src: "files/acceptance/01/sudoers.d/s1_user6"
+        src: "files/acceptance/sudoers.d/s1_user6"
       register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
       tags: [ "acceptance-test" ]
@@ -280,14 +280,14 @@
     - name: Acceptance Test - Verify user with authorized keys and sudo specifications (2 / 3)
       copy:
         dest: "~s1_user8/.ssh/authorized_keys"
-        src: "files/acceptance/01/authorized_keys/s1_user8"
+        src: "files/acceptance/authorized_keys/s1_user8"
       register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
       tags: [ "acceptance-test" ]
     - name: Acceptance Test - Verify user with authorized keys and sudo specifications (3 / 3)
       copy:
         dest: "{{ sudo__confd_dir }}/s1_user8"
-        src: "files/acceptance/01/sudoers.d/s1_user8"
+        src: "files/acceptance/sudoers.d/s1_user8"
       register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
       tags: [ "acceptance-test" ]
@@ -346,7 +346,7 @@
     - name: Acceptance Test - Verify sudo prefix and suffix (3 / 3)
       copy:
         dest: "{{ sudo__confd_dir }}/prefix-s2_user1-suffix"
-        src: "files/acceptance/01/sudoers.d/s2_user1"
+        src: "files/acceptance/sudoers.d/s2_user1"
       register: "test_result"
       failed_when: (test_result|failed or test_result|changed)
       tags: [ "acceptance-test" ]
