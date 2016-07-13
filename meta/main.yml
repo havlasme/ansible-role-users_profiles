@@ -15,22 +15,22 @@ dependencies:
 
 galaxy_info:
   author: "Tomáš Havlas"
-  description: "Manage system users, groups, authorized keys, and sudo specifications."
   company: "Raven Systems"
-  issue_tracker_url: "https://github.com/tomashavlas/ansible-role-users_profiles/issues"
+  description: "Manage system users, groups, authorized keys, and sudo specifications."
   license: "BSD"
   min_ansible_version: 2.0
   github_branch: "master"
+  issue_tracker_url: "https://github.com/tomashavlas/ansible-role-users_profiles/issues"
   platforms:
-  - name: Debian
-    versions:
-      - jessie
-  - name: EL
-    versions:
-      - 7
-  - name: Fedora
-    versions:
-      - 23
+    - name: Debian
+      versions:
+        - jessie
+    - name: EL
+      versions:
+        - 7
+    - name: Fedora
+      versions:
+        - 23
   galaxy_tags:
     - "authorized"
     - "key"
