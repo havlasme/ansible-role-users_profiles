@@ -8,8 +8,8 @@ dependencies:
     system_users__default_groups_append: "{{ users_profiles__users_default_groups_append }}"
   - role: "tomashavlas.authorized_keys"
     authorized_keys__list: "{{ users_profiles__register_authorized_keys }}"
-    authorized_keys__exclusive: "{{ users_profiles__authorized_keys_exclusive }}"
-    authorized_keys__manage_dir: "{{ users_profiles__authorized_keys_manage_dir }}"
+    authorized_keys__exclusive: "{{ users_profiles__authorized_keys_default_exclusive }}"
+    authorized_keys__manage_dir: "{{ users_profiles__authorized_keys_default_manage_dir }}"
   - role: "tomashavlas.sudo"
     sudo__specs: "{{ users_profiles__register_sudo }}"
 

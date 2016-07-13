@@ -92,10 +92,10 @@ users_profiles__list: []
 #    disabled: bool
 
 # default value for exclusive option of authrozied keys
-users_profiles__authorized_keys_exclusive: false
+users_profiles__authorized_keys_default_exclusive: false
 
 # default value for manage_dir option of authorized keys
-users_profiles__authorized_keys_manage_dir: true
+users_profiles__authorized_keys_default_manage_dir: true
 
 # prefix to prepend to filenames of files located in sudo configuration dropins directory
 users_profiles__sudo_prefix: ""
