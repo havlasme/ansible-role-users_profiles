@@ -10,10 +10,10 @@ functional:
 
 idempotency:
 	unbuffer ansible-playbook test.yml -i inventory --skip-tags=pre-test,acceptance-test | tee /tmp/ansible_idempotence_test.txt\
-	&& grep -E 'test_users_profiles_01_centos7.*changed=0.*unreachable=0.*failed=0' /tmp/ansible_idempotence_test.txt\
-	&& grep -E 'test_users_profiles_01_debian8.*changed=0.*unreachable=0.*failed=0' /tmp/ansible_idempotence_test.txt\
-	&& (echo 'Idempotence test: PASS' && exit 0)\
-	|| (echo 'Idempotence test: FAIL' && exit 1)
+	&& grep -E "test_users_profiles_01_centos7.*changed=0.*unreachable=0.*failed=0" /tmp/ansible_idempotence_test.txt\
+	&& grep -E "test_users_profiles_01_debian8.*changed=0.*unreachable=0.*failed=0" /tmp/ansible_idempotence_test.txt\
+	&& (echo "Idempotence test: PASS" && exit 0)\
+	|| (echo "Idempotence test: FAIL" && exit 1)
 
 acceptance:
 	ansible-playbook test.yml -i inventory --tags=initialize-docker,acceptance-test\
